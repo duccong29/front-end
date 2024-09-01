@@ -20,6 +20,7 @@ export default function SignupPage() {
     event.preventDefault();
     setError(null);
 
+    
     if (formData.passWord !== formData.confirmPassword) {
       setError('Mật khẩu không khớp');
       return;
