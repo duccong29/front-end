@@ -6,6 +6,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 interface AuthContextType {
   isLoggedIn: boolean;
   roles: string[];
+  userId: string | null;
   login: () => void;
   logout: () => void;
 }
@@ -15,6 +16,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [roles, setRoles] = useState<string[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     checkLoginStatus();
@@ -27,6 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const result = await response.json();
         setIsLoggedIn(true);
         setRoles(result.data.roles.map((role: any) => role.name));
+        setUserId(result.data.id); 
       } else {
         setIsLoggedIn(false);
         setRoles([]);
@@ -35,6 +38,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error('Error checking login status:', error);
       setIsLoggedIn(false);
       setRoles([]);
+      setUserId(null);
     }
   };
 
@@ -45,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, roles, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, userId, roles, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

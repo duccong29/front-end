@@ -1,14 +1,27 @@
-import Link from "next/link";
-import ApartmentsPage from "./apartments/page";
+"use client";
+import ApartmentsPage from "./(user)/apartments/page";
+import UserHeader from "@/components/users/UserHeader";
+import UserFooter from "@/components/users/UserFooter";
+import UserBanner from "@/components/users/UserBanner";
+import UserCarousel from "@/components/users/UserCarousel";
+import FeaturedResidence from "@/components/users/FeaturedResidence";
 
 
 const HomePage: React.FC = () => {
-  return (
-    <div>
-      <h1>Trang chủ</h1>
-      <ApartmentsPage />
-    </div>
-  );
+  return <MainContent />;
 };
 
 export default HomePage;
+
+function MainContent() {
+  return (
+    <div>
+      <UserHeader />
+      <UserBanner />
+      <ApartmentsPage />
+      <UserCarousel />
+      <FeaturedResidence />
+      <UserFooter />
+    </div>
+  );
+}
